@@ -65,3 +65,60 @@ def calculate_entropy(password):
 print(calculate_entropy("abc"))
 print(calculate_entropy("Maseru2026"))
 print(calculate_entropy(""))
+
+COMMON_PASSWORDS = ["password", "123456", "12345678", "qwerty", "abc123", "letmein", "admin", "welcome","iloveyou", "monkey"] 
+
+def is_common_password(password):
+    return password.lower() in COMMON_PASSWORDS
+
+print(is_common_password("password"))  # True
+print(is_common_password("mypassword"))  # False
+
+print(is_common_password("password"))    # True
+print(is_common_password("PASSWORD"))    # True
+print(is_common_password("Qwerty"))      # True
+print(is_common_password("Kh7#mPq2!x"))  # False
+
+LOCAL_WORDS = ["maseru", "lesotho", "basotho", "sesotho", "maputsoe", "leribe", "mafeteng", "moshoeshoe", "thaba", "mokhotlong"]
+
+def contains_local_word(password):
+    password_lower = password.lower()
+    for word in LOCAL_WORDS:
+        if word in password_lower:
+            return True
+    return False
+print(contains_local_word("Maseru2026"))     # True
+print(contains_local_word("ILoveLesotho!"))  # True
+print(contains_local_word("Kh7#mPq2!x"))     # False
+print(contains_local_word(""))               # False
+
+def has_repeats(password):
+    for i in range(len(password) - 2):
+        if password[i] == password[i + 1] == password[i + 2]:
+            return True
+    return False
+
+print(has_repeats("aaa1"))         # True
+print(has_repeats("abc111"))       # True
+print(has_repeats("aabbcc"))       # False
+print(has_repeats("Kh7#mPq2!x"))   # False
+print(has_repeats(""))             # False
+
+sequences = ["abcdefghijklmnopqrstuvwxyz","0123456789", "qwertyuiop", "asdfghjkl", "zxcvbnm"]
+
+def has_sequence(password):
+    lowered = password.lower()
+    for seq in sequences:
+        for i in range(len(seq) - 2):
+            chunk = seq[i:i + 3]
+            if chunk in lowered or chunk[::-1] in lowered:
+                return True
+    return False
+
+print(has_sequence("abc"))         # True
+print(has_sequence("Pass123"))     # True
+print(has_sequence("cba"))         # True
+print(has_sequence("Qwerty"))      # True
+print(has_sequence("135"))         # False
+print(has_sequence("Kh7#mPq2!x"))  # False
+print(has_sequence(""))            # False
