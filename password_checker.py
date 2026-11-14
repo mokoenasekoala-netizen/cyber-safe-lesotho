@@ -122,3 +122,40 @@ print(has_sequence("Qwerty"))      # True
 print(has_sequence("135"))         # False
 print(has_sequence("Kh7#mPq2!x"))  # False
 print(has_sequence(""))            # False
+
+def rate_entropy(score):
+    if score < 28:
+        return "Very Weak"
+    elif score < 36:
+        return "Weak"
+    elif score < 60:
+        return "Fair"
+    elif score < 128:
+        return "Strong"
+    else:
+        return "Very Strong"
+
+def check_password(password):
+    problems = []
+    score = calculate_entropy(password)
+
+    if is_common_password(password):
+        problems.append("This is one of the most common passwords.")
+        score = 0
+    if contains_local_word(password):
+        problems.append("This password contains a local word.")
+        score = 0
+        return "Weak"
+    if has_repeats(password):
+        problems.append("This password contains repeated characters.")
+        score = 0
+    if has_sequence(password):
+        problems.append("This password contains a sequence.")
+        score = 0
+
+    return round(score, 1), rate_entropy(score), problems
+
+print(check_password("password"))
+print(check_password("Maseru2026"))
+print(check_password("Pass123"))
+print(check_password("Kh7#mPq2!x"))
