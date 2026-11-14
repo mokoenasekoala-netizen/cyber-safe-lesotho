@@ -139,8 +139,8 @@ def check_password(password):
     problems = []
     score = calculate_entropy(password)
 
-    if is_common_password(password):
-        problems.append("This is one of the most common passwords.")
+    if is_local_password(password):
+        problems.append("This passwords contains a local word.")
         score = 0
     if contains_local_word(password):
         problems.append("This password contains a local word.")
@@ -151,7 +151,7 @@ def check_password(password):
         score = 0
     if has_sequence(password):
         problems.append("This password contains a sequence.")
-        score = 0
+        score -= 25
 
     return round(score, 1), rate_entropy(score), problems
 
