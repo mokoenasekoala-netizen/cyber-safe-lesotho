@@ -139,9 +139,9 @@ def check_password(password):
     problems = []
     score = calculate_entropy(password)
 
-    if is_local_password(password):
+    if contains_local_word(password):
         problems.append("This passwords contains a local word.")
-        score = 0
+        score -= 25
     if contains_local_word(password):
         problems.append("This password contains a local word.")
         score = 0
